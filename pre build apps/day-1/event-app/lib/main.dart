@@ -1,121 +1,226 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Event App'),
+          backgroundColor: Colors.blue.shade500,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        backgroundColor: Colors.blue.shade300,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.asset('assets/images/flutter_workshop.png'),
+                      SizedBox(height: 20),
+                      Text('Flutter Workshop', style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 20),
+                      Text(
+                        'A hands-on Flutter workshop where participants build real apps while learning core concepts like widgets, state management, and navigation. Perfect for beginners who want practical experience in creating cross-platform mobile apps.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '29/22/22 to 22/33/44',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network(
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT8GiNtQR6O_QqxjH7fmQCiQqD21DlBlP-iQ&s',
+                      ),
+                      SizedBox(height: 20),
+                      Text('ReadtJS Workshop', style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 20),
+                      Text(
+                        'A practical React.js workshop focused on building dynamic and responsive web applications using components, hooks, and state management. Ideal for beginners who want to understand modern frontend development by creating real projects.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '29/22/22 to 22/33/44',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network('https://picsum.photos/400/200?1'),
+                      SizedBox(height: 20),
+                      Text('ReactJS Workshop', style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 20),
+                      Text(
+                        'A practical React.js workshop focused on building dynamic and responsive web applications using components, hooks, and state management.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '29/22/22 to 22/33/44',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network('https://picsum.photos/400/200?2'),
+                      SizedBox(height: 20),
+                      Text('Flutter Workshop', style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 20),
+                      Text(
+                        'A hands-on Flutter workshop where participants build real apps while learning core concepts like widgets and navigation.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '10/11/23 to 12/11/23',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network('https://picsum.photos/400/200?3'),
+                      SizedBox(height: 20),
+                      Text('Python Bootcamp', style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 20),
+                      Text(
+                        'An intensive Python bootcamp covering basics, loops, functions, and mini projects for beginners.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '01/01/24 to 05/01/24',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network('https://picsum.photos/400/200?4'),
+                      SizedBox(height: 20),
+                      Text('AI & ML Seminar', style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 20),
+                      Text(
+                        'An introductory seminar on Artificial Intelligence and Machine Learning concepts with real-life applications.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '15/02/24 to 16/02/24',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network('https://picsum.photos/400/200?5'),
+                      SizedBox(height: 20),
+                      Text(
+                        'Web Development Crash Course',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'A beginner-friendly crash course covering HTML, CSS, and JavaScript to build responsive websites.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '20/03/24 to 25/03/24',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Container(
+                  color: Colors.blue.shade200,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.network('https://picsum.photos/400/200?6'),
+                      SizedBox(height: 20),
+                      Text(
+                        'Cybersecurity Basics',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'An awareness session on cybersecurity fundamentals and protecting digital assets.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '05/04/24 to 06/04/24',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
