@@ -29,11 +29,14 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(title: Text('Counter App')),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          tapCount = tapCount + 1;
+          setState(() {});
+        },
         child: Icon(Icons.add),
       ),
       body: Center(
-        child: Text('no of time you have tapped: ' + tapCount.toString()),
+        child: Text('no of time you have tapped: $tapCount'),
       ),
     );
   }
