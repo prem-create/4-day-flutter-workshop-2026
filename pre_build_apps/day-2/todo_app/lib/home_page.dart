@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_colors.dart';
+import 'package:todo_app/todo_list_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -51,7 +52,9 @@ class HomePage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TodoListPage(),));
+                    },
                     child: Text(
                       'Get Started',
                       style: TextStyle(color: textPrimaryColor, fontSize: 18),
