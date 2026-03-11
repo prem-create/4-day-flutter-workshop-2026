@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_colors.dart';
+import 'package:todo_app/app_data.dart';
+import 'package:todo_app/task_list.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
@@ -9,6 +13,10 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
+  //controllers
+  TextEditingController taskController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +32,38 @@ class _TodoListPageState extends State<TodoListPage> {
         toolbarHeight: 100,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Column(
+                  children: [
+                    Text('Add a new task'),
+                    Text('enter the task'),
+                    TextField(controller: taskController),
+                    Text('enter time'),
+                    TextField(controller: timeController),
+                  ],
+                ),
+
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      addTask(taskController.text.toString());
+                      addTime(timeController.text.toString());
+                      Navigator.pop(context);
+                      setState(() {});
+                      taskController.text='';
+                      timeController.text='';
+                    },
+                    child: Text('add task'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
         backgroundColor: primaryColor,
         shape: CircleBorder(),
         child: Icon(Icons.add, color: textPrimaryColor),
@@ -52,29 +91,23 @@ class _TodoListPageState extends State<TodoListPage> {
                 ),
               ),
               SizedBox(height: 20),
-              SizedBox(
-                height: 100,
-                width: double.infinity,
-                child: Card(
-                  color: Color(0xFF201F1F),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Checkbox(value: true, onChanged: (value) {}),
-                          Text(
-                            'task1',
-                            style: TextStyle(color: textPrimaryColor),
-                          ),
-                        ],
+              Expanded(
+                child: ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        setTaskCompletion(index);
+                        setState(() {});
+                        log(isTaskCompleted[index].toString());
+                      },
+                      child: TaskList(
+                        completionTime: completionTime[index],
+                        tasks: tasks[index],
+                        isTaskCompleted: isTaskCompleted[index],
                       ),
-                      Text(
-                        '7:21 PM   ',
-                        style: TextStyle(color: textPrimaryColor),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
             ],

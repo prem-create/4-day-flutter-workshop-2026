@@ -8,7 +8,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hii Prem!', style: TextStyle(color: textPrimaryColor)),
+        title: Text(
+          'Hii Prem!',
+          style: TextStyle(color: secondaryColor, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: primaryColor,
         toolbarHeight: 100,
