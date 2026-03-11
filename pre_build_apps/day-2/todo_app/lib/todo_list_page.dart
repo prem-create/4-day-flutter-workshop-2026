@@ -17,6 +17,9 @@ class _TodoListPageState extends State<TodoListPage> {
   TextEditingController taskController = TextEditingController();
   TextEditingController timeController = TextEditingController();
 
+  //FormField key
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,30 +39,62 @@ class _TodoListPageState extends State<TodoListPage> {
           showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
-                content: Column(
-                  children: [
-                    Text('Add a new task'),
-                    Text('enter the task'),
-                    TextField(controller: taskController),
-                    Text('enter time'),
-                    TextField(controller: timeController),
+              return Form(
+                key: _formKey,
+                child: AlertDialog(
+                  title: Text('Add a new task'),
+
+                  content: Column(
+                    children: [
+                      TextFormField(
+                        controller: taskController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          label: Text('Enter the task'),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'please define task';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: timeController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          label: Text('Enter time'),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'plese define time';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          if (timeController.text.isNotEmpty &&
+                              taskController.text.isNotEmpty) {
+                            addTask(taskController.text.toString());
+                            addTime(timeController.text.toString());
+                            Navigator.pop(context);
+                            setState(() {});
+                            taskController.text = '';
+                            timeController.text = '';
+                          }
+                        }
+                      },
+                      child: Text('add task'),
+                    ),
                   ],
                 ),
-
-                actions: [
-                  ElevatedButton(
-                    onPressed: () {
-                      addTask(taskController.text.toString());
-                      addTime(timeController.text.toString());
-                      Navigator.pop(context);
-                      setState(() {});
-                      taskController.text='';
-                      timeController.text='';
-                    },
-                    child: Text('add task'),
-                  ),
-                ],
               );
             },
           );

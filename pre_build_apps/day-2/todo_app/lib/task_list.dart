@@ -17,49 +17,37 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      width: double.infinity,
-      child: Card(
-        color: Color(0xFF201F1F),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    isTaskCompleted
-                        ? Icons.check_box_sharp
-                        : Icons.check_box_outline_blank,
-                  ),
-                  SizedBox(width: 20),
-                  Text(
-                    tasks,
-                    style: TextStyle(
-                      color: isTaskCompleted
-                          ? textSecondaryColor
-                          : textPrimaryColor,
-                      decoration: isTaskCompleted
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                completionTime,
-                style: TextStyle(
-                  color: isTaskCompleted
-                      ? textSecondaryColor
-                      : textPrimaryColor,
-                ),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        contentPadding: EdgeInsets.all(7),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(8),
+          side: BorderSide(
+            color: isTaskCompleted ? textSecondaryColor : textPrimaryColor,
+          ),
+        ),
+        leading: Icon(
+          color: isTaskCompleted ? textSecondaryColor : textPrimaryColor,
+          isTaskCompleted ? Icons.check_box_sharp : Icons.check_box_outline_blank,
+        ),
+        title: Text(
+          tasks,
+          style: TextStyle(
+            color: isTaskCompleted ? textSecondaryColor : textPrimaryColor,
+            decoration: isTaskCompleted
+                ? TextDecoration.lineThrough
+                : TextDecoration.none,
+          ),
+        ),
+        trailing: Text(
+          completionTime,
+          style: TextStyle(
+            color: isTaskCompleted ? textSecondaryColor : textPrimaryColor,
           ),
         ),
       ),
     );
   }
 }
+
