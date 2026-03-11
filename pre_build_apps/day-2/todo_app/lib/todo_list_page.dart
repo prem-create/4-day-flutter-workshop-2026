@@ -131,6 +131,8 @@ class _TodoListPageState extends State<TodoListPage> {
                   itemCount: tasks.length,
                   itemBuilder: (context, index) {
                     return InkWell(
+                      hoverColor: primaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                       onTap: () {
                         setTaskCompletion(index);
                         setState(() {});
