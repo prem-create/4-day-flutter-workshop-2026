@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/constants/app_colors.dart';
 import 'package:notes_app/constants/app_spacing.dart';
 import 'package:notes_app/data/dummy_data.dart';
+import 'package:notes_app/pages/note_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,12 +14,25 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         backgroundColor: AppColors.primary,
-        onPressed: () {},
-        child: Icon(Icons.add_circle_outline_rounded,size: AppSpacing.xl,color: AppColors.textPrimary,),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NotePage();
+              },
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add_circle_outline_rounded,
+          size: AppSpacing.xl,
+          color: AppColors.textPrimary,
+        ),
       ),
       appBar: AppBar(
         backgroundColor: AppColors.backgroundPrimary,
-        leading: Icon(Icons.note_alt_rounded, color: AppColors.textPrimary,),
+        leading: Icon(Icons.note_alt_rounded, color: AppColors.textPrimary),
         title: Text(
           "Notes",
           style: TextStyle(
@@ -37,29 +51,39 @@ class HomePage extends StatelessWidget {
             itemCount: titles.length,
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-              child: Card(
-                color: AppColors.backgroundSecondary,
-                elevation: 20,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusGeometry.circular(AppSpacing.curve),
-                  side: BorderSide(color: Colors.white10),
-                ),
-                child: ListTile(
-                  title: Text(
-                    titles[index],
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NotePage()),
+                  );
+                },
+                child: Card(
+                  color: AppColors.backgroundSecondary,
+                  elevation: 20,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(
+                      AppSpacing.curve,
                     ),
+                    side: BorderSide(color: Colors.white10),
                   ),
-                  subtitle: Text(
-                    bodies[index],
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.textSecondary,
+                  child: ListTile(
+                    title: Text(
+                      titles[index],
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    subtitle: Text(
+                      bodies[index],
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ),
                 ),
