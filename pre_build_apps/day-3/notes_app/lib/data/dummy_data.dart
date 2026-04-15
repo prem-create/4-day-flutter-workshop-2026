@@ -1,6 +1,6 @@
 final List<String> titles = ["Daily Tasks", "Flutter Learning"];
 
-final List<String> bodies = [
+final List<String> notes = [
   "Buy groceries (milk, bread, eggs, fruits)\n"
       "Complete Flutter assignment before evening\n"
       "Go for a 30 min walk or light exercise\n"
@@ -22,10 +22,15 @@ final List<String> bodies = [
 
 void addNewEntry(String title, String body) {
   titles.add(title);
-  bodies.add(body);
+  notes.add(body);
 }
 
 void deleteEntry(int index) {
   titles.removeAt(index);
-  bodies.removeAt(index);
+  notes.removeAt(index);
+}
+
+void editExistingData(int index, String title, String note) {
+  titles[index] = title;
+  notes[index] = note;
 }

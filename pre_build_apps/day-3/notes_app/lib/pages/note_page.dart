@@ -16,6 +16,13 @@ class _NotePageState extends State<NotePage> {
   TextEditingController noteController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    titleController.text = widget.title ?? '';
+    noteController.text = widget.note ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundPrimary,
@@ -36,7 +43,12 @@ class _NotePageState extends State<NotePage> {
           TextButton(
             onPressed: () {},
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context, {
+                  "title": titleController.text,
+                  "note": noteController.text,
+                });
+              },
               child: Text("Save", style: TextStyle(color: AppColors.primary)),
             ),
           ),
@@ -60,6 +72,7 @@ class _NotePageState extends State<NotePage> {
             SizedBox(
               height: 50,
               child: TextField(
+                controller: titleController,
                 expands: true,
                 maxLines: null,
                 cursorColor: AppColors.textPrimary,
@@ -79,6 +92,7 @@ class _NotePageState extends State<NotePage> {
             ),
             Expanded(
               child: TextField(
+                controller: noteController,
                 expands: true,
                 maxLines: null,
                 cursorColor: AppColors.textPrimary,

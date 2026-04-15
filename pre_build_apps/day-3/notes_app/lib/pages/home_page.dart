@@ -4,8 +4,18 @@ import 'package:notes_app/constants/app_spacing.dart';
 import 'package:notes_app/data/dummy_data.dart';
 import 'package:notes_app/pages/note_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void saveNewData(String title, String note) {
+    addNewEntry(title, note);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +24,8 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         backgroundColor: AppColors.primary,
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) {
@@ -23,6 +33,10 @@ class HomePage extends StatelessWidget {
               },
             ),
           );
+
+          if (result != null) {
+            saveNewData(result["title"], result["note"]);
+          }
         },
         child: Icon(
           Icons.add_circle_outline_rounded,
@@ -52,11 +66,19 @@ class HomePage extends StatelessWidget {
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  final result = await Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NotePage()),
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          NotePage(title: titles[index], note: notes[index]),
+                    ),
                   );
+
+                  if (result != null) {
+                    editExistingData(index, result["title"], result["note"]);
+                    setState(() {});
+                  }
                 },
                 child: Card(
                   color: AppColors.backgroundSecondary,
@@ -77,7 +99,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     subtitle: Text(
-                      bodies[index],
+                      notes[index],
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
