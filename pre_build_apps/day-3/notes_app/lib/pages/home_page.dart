@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/constants/app_colors.dart';
 import 'package:notes_app/constants/app_spacing.dart';
 import 'package:notes_app/data/dummy_data.dart';
+import 'package:notes_app/local_storage/shared_preferences.dart';
 import 'package:notes_app/pages/note_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,12 @@ class _HomePageState extends State<HomePage> {
   void saveNewData(String title, String note) {
     addNewEntry(title, note);
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    UserSimplePreference.getData();
+    super.initState();
   }
 
   @override
@@ -90,6 +97,13 @@ class _HomePageState extends State<HomePage> {
                     side: BorderSide(color: Colors.white10),
                   ),
                   child: ListTile(
+                    trailing: IconButton(
+                      onPressed: () {
+                        deleteEntry(index);
+                        setState(() {});
+                      },
+                      icon: Icon(Icons.delete, color: AppColors.textPrimary),
+                    ),
                     title: Text(
                       titles[index],
                       style: TextStyle(

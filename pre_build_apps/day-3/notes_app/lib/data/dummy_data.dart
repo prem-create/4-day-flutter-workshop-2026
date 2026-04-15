@@ -1,36 +1,23 @@
-final List<String> titles = ["Daily Tasks", "Flutter Learning"];
+import 'package:notes_app/local_storage/shared_preferences.dart';
 
-final List<String> notes = [
-  "Buy groceries (milk, bread, eggs, fruits)\n"
-      "Complete Flutter assignment before evening\n"
-      "Go for a 30 min walk or light exercise\n"
-      "Call parents and check on them\n"
-      "Drink at least 3L water throughout the day\n"
-      "Check emails and reply to important ones\n"
-      "Plan tasks for tomorrow\n"
-      "Avoid too much screen time before sleep",
+List<String> titles = [];
 
-  "Understand difference between Stateless and Stateful widgets\n"
-      "Practice layouts using Row, Column, and Container\n"
-      "Learn how Scaffold and AppBar work together\n"
-      "Use ListView.builder for dynamic lists\n"
-      "Build a simple UI (notes app or to-do app)\n"
-      "Explore basic theming and colors\n"
-      "Fix layout overflow errors if any\n"
-      "Revise today’s concepts and code",
-];
+List<String> notes = [];
 
-void addNewEntry(String title, String body) {
+void addNewEntry(String title, String body) async {
   titles.add(title);
   notes.add(body);
+  await UserSimplePreference.saveData(titles, notes);
 }
 
-void deleteEntry(int index) {
+Future<void> deleteEntry(int index) async {
   titles.removeAt(index);
   notes.removeAt(index);
+  await UserSimplePreference.saveData(titles, notes);
 }
 
-void editExistingData(int index, String title, String note) {
+Future<void> editExistingData(int index, String title, String note) async {
   titles[index] = title;
   notes[index] = note;
+  await UserSimplePreference.saveData(titles, notes);
 }
