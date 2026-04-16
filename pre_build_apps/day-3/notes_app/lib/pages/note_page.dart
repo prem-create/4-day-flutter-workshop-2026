@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/app_colors.dart';
 import 'package:notes_app/constants/app_spacing.dart';
+import 'package:notes_app/pages/utils/my_alert_dialog.dart';
 
 class NotePage extends StatefulWidget {
   final String? title;
@@ -41,16 +42,20 @@ class _NotePageState extends State<NotePage> {
         titleSpacing: 0.0,
         actions: [
           TextButton(
-            onPressed: () {},
-            child: TextButton(
-              onPressed: () {
-                Navigator.pop(context, {
-                  "title": titleController.text,
-                  "note": noteController.text,
-                });
-              },
-              child: Text("Save", style: TextStyle(color: AppColors.primary)),
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => MyAlertDialog(
+                text: "Are you sure, want to save this??",
+                voidCallback: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context, {
+                    "title": titleController.text,
+                    "note": noteController.text,
+                  });
+                },
+              ),
             ),
+            child: Text("Save", style: TextStyle(color: AppColors.primary)),
           ),
         ],
         actionsPadding: EdgeInsets.only(right: AppSpacing.md),

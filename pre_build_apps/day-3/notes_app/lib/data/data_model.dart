@@ -4,6 +4,7 @@ List<String> titles = [];
 
 List<String> notes = [];
 
+
 void addNewEntry(String title, String body) async {
   titles.add(title);
   notes.add(body);

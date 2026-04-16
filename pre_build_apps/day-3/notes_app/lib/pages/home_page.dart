@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:notes_app/constants/app_colors.dart';
 import 'package:notes_app/constants/app_spacing.dart';
-import 'package:notes_app/data/dummy_data.dart';
+import 'package:notes_app/data/data_model.dart';
 import 'package:notes_app/local_storage/shared_preferences.dart';
 import 'package:notes_app/pages/note_page.dart';
+import 'package:notes_app/pages/utils/my_alert_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController nameController = TextEditingController();
   void saveNewData(String title, String note) {
     addNewEntry(title, note);
     setState(() {});
@@ -68,64 +71,101 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
-          child: ListView.builder(
-            itemCount: titles.length,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-              child: GestureDetector(
-                onTap: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          NotePage(title: titles[index], note: notes[index]),
-                    ),
-                  );
-
-                  if (result != null) {
-                    editExistingData(index, result["title"], result["note"]);
-                    setState(() {});
-                  }
-                },
-                child: Card(
-                  color: AppColors.backgroundSecondary,
-                  elevation: 20,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(
-                      AppSpacing.curve,
-                    ),
-                    side: BorderSide(color: Colors.white10),
-                  ),
-                  child: ListTile(
-                    trailing: IconButton(
-                      onPressed: () {
-                        deleteEntry(index);
-                        setState(() {});
-                      },
-                      icon: Icon(Icons.delete, color: AppColors.textPrimary),
-                    ),
-                    title: Text(
-                      titles[index],
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+          child: titles.isEmpty
+              ? Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Lottie.asset("assets/animations/nothing_to_show.json"),
+                      Text(
+                        textAlign: TextAlign.center,
+                        "Nothing to show\nTry adding a new task",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: titles.length,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.sm,
                     ),
-                    subtitle: Text(
-                      notes[index],
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.textSecondary,
+                    child: GestureDetector(
+                      onTap: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NotePage(
+                              title: titles[index],
+                              note: notes[index],
+                            ),
+                          ),
+                        );
+
+                        if (result != null) {
+                          editExistingData(
+                            index,
+                            result["title"],
+                            result["note"],
+                          );
+                          setState(() {});
+                        }
+                      },
+                      child: Card(
+                        color: AppColors.backgroundSecondary,
+                        elevation: 20,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(
+                            AppSpacing.curve,
+                          ),
+                          side: BorderSide(color: Colors.white10),
+                        ),
+                        child: ListTile(
+                          trailing: IconButton(
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => MyAlertDialog(
+                                color: Colors.red,
+                                text: "Are you sure, you want to delete this??",
+                                voidCallback: () {
+                                  deleteEntry(index);
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.delete,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          title: Text(
+                            titles[index],
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          subtitle: Text(
+                            notes[index],
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
         ),
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:notes_app/data/dummy_data.dart';
+import 'package:notes_app/data/data_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSimplePreference {
@@ -21,4 +21,5 @@ class UserSimplePreference {
     titles = preferences!.getStringList("titles") ?? [];
     notes = preferences!.getStringList("notes") ?? [];
   }
+
 }
